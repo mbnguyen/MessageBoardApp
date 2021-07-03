@@ -1,7 +1,7 @@
 Name: Minh Nguyen
 StudentID: 002-46-4288
 Project: Fan Page App
-GitHub link: https://github.com/mbnguyen/ChatApp
+GitHub link: https://github.com/mbnguyen/MessageBoardApp
 'npx create-react-app chat-app'
 Then:
 'cd chat-app'
@@ -20,4 +20,4 @@ Last name: Nguyen
 Email: nguyen@gmail.com
 Password: password
 First name: GSU
-Last name: GSU
+Last name: Nguyen
