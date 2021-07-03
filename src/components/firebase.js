@@ -5,12 +5,12 @@ import 'firebase/firebase-firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 
 const config = {
-    apiKey: "AIzaSyA9eZ6daf0XvhxuCOfS-dDcdOhQGxOzY8U",
-    authDomain: "chat-app-67999.firebaseapp.com",
-    projectId: "chat-app-67999",
-    storageBucket: "chat-app-67999.appspot.com",
-    messagingSenderId: "521082067632",
-    appId: "1:521082067632:web:59584113b83fa30c28b975"
+    apiKey: "AIzaSyBuaw0b03zKBYoUyadSnSbmYcGHtr9Cicc",
+    authDomain: "message-board-app-259f7.firebaseapp.com",
+    projectId: "message-board-app-259f7",
+    storageBucket: "message-board-app-259f7.appspot.com",
+    messagingSenderId: "572985925937",
+    appId: "1:572985925937:web:46080ddd626cd546f59010"
 };
 
 class Firebase {
