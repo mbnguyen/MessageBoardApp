@@ -12,6 +12,13 @@ const styles = theme => ({
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
+	paper: {
+		marginTop: 100,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		padding: 20,
+	},
 	submit: {
 		marginTop: 30,
 	}
@@ -22,9 +29,21 @@ function Chat(props) {
 
 	const [messageInput, setMessageInput] = useState('');
 
-	const [messages] = useCollectionData(firebase.query, {idField: 'id'});
-
 	const lastMsg = useRef();
+
+	let query;
+	let title = "";
+	//const [title, setTitle] = useState("");
+
+	if (props.board === "general") {
+		query = firebase.queryGeneral;
+		title = "General";
+	} else if (props.board === "random") {
+		query = firebase.queryRandom;
+		title = "Random";
+	}
+
+	const [messages] = useCollectionData(query, {idField: 'id'});
 
 	useEffect(() => {
 		lastMsg.current.scrollIntoView({ behavior: 'smooth' });
@@ -42,7 +61,12 @@ function Chat(props) {
 
 		const {uid} = firebase.auth.currentUser;
 
-		await firebase.sendMessage(messageInput, uid);
+		if (props.board === "general") {
+			await firebase.sendMessageGeneral(messageInput, uid);
+		} else if (props.board === "random") {
+			await firebase.sendMessageRandom(messageInput, uid);
+		}
+		
 		setMessageInput('');
 		lastMsg.current.scrollIntoView({ behavior: 'smooth' });
 	}
@@ -50,12 +74,12 @@ function Chat(props) {
 
 	return (
 		<main className={classes.main}>
-			<Paper className='window' required fullWidth>
+			<Paper className={classes.paper}>
 				<Typography component="h1" variant="h5">
-					Chat App
+					{title}
 				</Typography>
-				<div className='section'>
-					<div className='chatWindow'>
+				<div>
+					<div className="section">
 						{messages && messages.map(msg => <Message key={msg.id} message={msg}/>)}
 						<span ref={lastMsg}></span>
 					</div>
@@ -93,13 +117,20 @@ function Chat(props) {
 }
 
 function Message(props) {
-	const {text, uid} = props.message;
+	const {text, createdAt, uid} = props.message;
 
-	const messageClass = uid === firebase.auth.currentUser.uid ? 'sent': 'received';
+	const [fname, setName] = useState("");
+
+	const date = createdAt ? createdAt.toDate().toString() : "";
+
+	useEffect(() => {
+		firebase.getUserFirstName(uid).then(setName);
+	});
 
 	return(
-		<div className={messageClass}>
-			<p>{text}</p>
+		<div className="message">
+			<Typography component="h5" variant="h6">{fname}: {text}</Typography>
+			<p>on {date}</p>
 		</div>
 	);
 }

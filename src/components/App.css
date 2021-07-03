@@ -5,11 +5,8 @@
 }
 
 .window {
-  height: 100vh;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .section {
@@ -18,51 +15,15 @@
   justify-content: center;
   padding: 10px;
 }
-
-.sent {
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-}
-
-.sent p {
-  color: white;
-  background: #0b93f6;
-  align-self: flex-end;
-}
-.received p {
-  display: flex;
-  align-items: center;
-  background: #e5e5ea;
-  color: black;
-}
-
-p {
+.message {
   max-width: 500px;
   margin-bottom: 12px;
   line-height: 24px;
   padding: 10px 20px;
   border-radius: 10px;
   position: relative;
+  text-align: left;
   color: white;
-  text-align: center;
-}
-
-.chatWindow {
-  height: 500px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-chatWindow::-webkit-scrollbar {
-  width: 0.15rem;
-}
-
-chatWindow::-webkit-scrollbar-track {
-  background: #1e1e24;
-}
-
-chatWindow::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: #0b93f6;
+  align-self: flex-end;
 }

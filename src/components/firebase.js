@@ -19,8 +19,10 @@ class Firebase {
 		app.initializeApp(config);
 		this.auth = app.auth();
 		this.db = app.firestore();
-		this.messageRef = this.db.collection("messages");
-		this.query = this.messageRef.orderBy('createdAt').limit(20);
+		this.messageRefGeneral = this.db.collection("general");
+		this.messageRefRandom = this.db.collection("random");
+		this.queryGeneral = this.messageRefGeneral.orderBy('createdAt').limit(20);
+		this.queryRandom = this.messageRefRandom.orderBy('createdAt').limit(20);
 	}
 
 	login(email, password) {
@@ -29,16 +31,6 @@ class Firebase {
 
 	logout() {
 		return this.auth.signOut()
-	}
-
-	addMessage(msg) {
-		if(!this.auth.currentUser) {
-			return alert('Not authorized')
-		}
-
-		return this.db.doc(`messages/message`).set({
-			msg
-		})
 	}
 
 	isInitialized() {
@@ -58,7 +50,12 @@ class Firebase {
 
 	async getCurrentUserFirstName() {
 		const name = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
-		return name.get('firstName')
+		return name.get('fname')
+	}
+
+	async getUserFirstName(uid) {
+		const name = await this.db.doc(`users/${uid}`).get()
+		return name.get('fname')
 	}
 
 	async getCurrentUserDate() {
@@ -66,8 +63,16 @@ class Firebase {
 		return date.get('date');
 	}
 
-	async sendMessage(text, uid) {
-		this.messageRef.add({
+	async sendMessageGeneral(text, uid) {
+		this.messageRefGeneral.add({
+			text: text,
+			createdAt: app.firestore.FieldValue.serverTimestamp(),
+			uid
+		});
+	}
+
+	async sendMessageRandom(text, uid) {
+		this.messageRefRandom.add({
 			text: text,
 			createdAt: app.firestore.FieldValue.serverTimestamp(),
 			uid

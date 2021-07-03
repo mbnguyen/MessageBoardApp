@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import './styles.css'
-import HomePage from '../HomePage'
-import Login from '../Login'
-import Chat from '../Chat'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { CircularProgress } from '@material-ui/core'
+import React, { useState, useEffect } from 'react';
+import './styles.css';
+import HomePage from '../HomePage';
+import Login from '../Login';
+import Chat from '../Chat';
+import Dashboard from '../Dashboard'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 import firebase from '../firebase';
 import '../App.css';
 
@@ -42,13 +43,6 @@ export default function App() {
 	return firebaseInitialized !== false ? (
 		<MuiThemeProvider className='App' theme={theme}>
 			<Screen/>
-			{/* <Router>
-				<Switch>
-					<Route exact path="/" component={HomePage} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/dashboard" component={Dashboard} />
-				</Switch>
-			</Router> */}
 		</MuiThemeProvider>
 	) : <div id="loader"><CircularProgress /></div>
 }
@@ -63,7 +57,11 @@ function Screen() {
 		case "Login":
 			return (<Login changeState={setState}/>);
 		case "Dashboard":
-			return (<Chat changeState={setState}/>);
+			return (<Dashboard changeState={setState}/>);
+		case "ChatGeneral":
+			return (<Chat changeState={setState} board="general"/>);
+		case "ChatRandom":
+			return (<Chat changeState={setState} board="random"/>);
 		default:
 			return (<CircularProgress/>);
 	}
