@@ -53,6 +53,11 @@ class Firebase {
 		return name.get('fname')
 	}
 
+	async getCurrentUserLastName() {
+		const name = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
+		return name.get('lname')
+	}
+
 	async getUserFirstName(uid) {
 		const name = await this.db.doc(`users/${uid}`).get()
 		return name.get('fname')
@@ -76,6 +81,20 @@ class Firebase {
 			text: text,
 			createdAt: app.firestore.FieldValue.serverTimestamp(),
 			uid
+		});
+	}
+
+	updateFName(fname) {
+		const userRef = this.db.doc(`users/${this.auth.currentUser.uid}`);
+		userRef.update({
+			fname: fname
+		});
+	}
+
+	updateLName(lname) {
+		const userRef = this.db.doc(`users/${this.auth.currentUser.uid}`);
+		userRef.update({
+			lname: lname
 		});
 	}
 
